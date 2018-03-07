@@ -41,13 +41,14 @@ var divideHangulPhoneme = require('./divideHangulPhoneme.js');
 
 function convert(str){
 	var r = divideHangulPhoneme.divide(str);
+	var r2 = divideHangulPhoneme.combine(r);
 	var msgs = [],msg = "";
 	for(var i=0,m=str.length;i<m;i++){
 		char = str.charAt(i);
 		if(r[i].length==3){
-			msg = "'"+char+"' => ['"+r[i].join("' , '")+"']";
+			msg = "'"+char+"' => ['"+r[i].join("' , '")+"'] => "+r2[i]+"'";
 		}else{
-			msg = "'"+char+"' => '"+r[i]+"'";
+			msg = "'"+char+"' => '"+r[i]+"' => '"+r2[i]+"'";
 		}
 		 msgs.push(msg);
 	}

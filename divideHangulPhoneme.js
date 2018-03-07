@@ -17,7 +17,7 @@ var divideHangulPhoneme = function(){
 			for(var i=0,m=str.length;i<m;i++){
 				char = str.charAt(i);
 				r = this.divideCharToPhoneme(char);
-				res.push(r?r:char);
+				res.push(r);
 			}
 			return res;
 		},
@@ -29,7 +29,7 @@ var divideHangulPhoneme = function(){
 		"divideCharToPhoneme":function(char){
 			var poses = this.divideCharToPos(char);
 			if(!poses){
-				return false;
+				return char;
 			}
 			return [this.arr_1st[poses[0]],this.arr_2nd[poses[1]],this.arr_3th[poses[2]]];
 		},
@@ -49,6 +49,34 @@ var divideHangulPhoneme = function(){
 			uniNum2 = (uniNum2%28);
 			var arr_3th_pos = uniNum2;
 			return [arr_1st_pos,arr_2nd_pos,arr_3th_pos];		
+		}
+		/**
+		 * 음소배열 묶음으로 문자열 만들기
+		 * @param  {[type]} charArrayArray [description]
+		 * @return {[type]}                [description]
+		 */
+		,"combine":function(charArrayArray){
+			var strs = []
+			for(var i=0,m=charArrayArray.length;i<m;i++){
+				strs.push(this.combinePhonemeArray(charArrayArray[i]))
+			}
+			return strs.join('');
+		}
+		,"combinePhonemeArray":function(charArray){
+			if(charArray.length != 3){return charArray;}
+			var num_1st = this.arr_1st.indexOf(charArray[0])
+			var num_2nd = this.arr_2nd.indexOf(charArray[1])
+			var num_3th = this.arr_3th.indexOf(charArray[2])
+			if(num_1st < 0 || num_2nd < 0 || num_3th < 0){
+				return null;
+			}
+			var arr_num = [num_1st,num_2nd,num_3th];
+			var num_uni = this.charCodeFromPosArray(arr_num);
+			return String.fromCharCode(num_uni);
+		}
+		,"charCodeFromPosArray":function(posArray){
+			if(posArray.length != 3){return -1;}
+			return posArray[2]+28*posArray[1]+588*posArray[0]+this.char_st;
 		}
 	}
 
