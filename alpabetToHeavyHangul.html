@@ -56,6 +56,38 @@
 	<div class="container">
 		<h1>alpabetToHeavyHangul</h1>
 		<h2>알파벳을 무거운 한글로 바꾸기</h2>
+		<form name="formTest0" action="#" onsubmit="convert(this.textInput.value);return false;">
+			<ul class="list-group">
+				<li class="list-group-item active">한글 음소 나누기</li>
+				<li class="list-group-item">
+					<div class="input-group">
+						<span class="input-group-addon">영문</span>
+						<input type="text" class="form-control" pattern="[A-Za-z]+" onkeyup="this.form.textInput1.value=alpabetToHeavyHangul.toHeavyHangul(this.value)" name="textInput0" placeholder="ABcd" value="ABcd">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" onclick="this.form.textInput0.onkeyup()">Go!</button>
+						</span>
+					</div><!-- /input-group -->
+				</li>
+				<li class="list-group-item">
+					<div class="input-group">
+						<span class="input-group-addon">한글</span>
+						<input type="text" class="form-control" pattern="[A-Za-z]+"   onkeyup="this.form.textInput2.value=alpabetToHeavyHangul.fromHeavyHangul(this.value)"  name="textInput1" placeholder="" value="">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" onclick="this.form.textInput1.onkeyup()">Go!</button>
+						</span>
+					</div><!-- /input-group -->
+				</li>
+				<li class="list-group-item">
+					<div class="input-group">
+						<span class="input-group-addon">영문</span>
+						<input type="text" class="form-control" pattern="[A-Za-z]+"   onkeyup="convert(this.value);" name="textInput2" placeholder="" value="">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">Go!</button>
+						</span>
+					</div><!-- /input-group -->
+				</li>
+			</ul>
+		</form>
 		<form name="formTest" action="#" onsubmit="convert(this.textInput.value);return false;">
 			<ul class="list-group">
 				<li class="list-group-item active">한글 음소 나누기</li>
