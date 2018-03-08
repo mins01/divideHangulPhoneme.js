@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<title>convertHeavyHangul</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!-- 합쳐지고 최소화된 최신 CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- 부가적인 테마 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	<!-- Jquery : not support < IE9-->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<meta property="og:title" content="alpabetToHeavyHangul">
+	<meta property="og:description" content="alpabetToHeavyHangul">
+	<meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+	<meta property="og:image:width" content="190">
+	<meta property="og:image:height" content="70" />
+	<meta property="og:site_name" content="공대여자 홈" />
+	<meta property="og:type" content="website">
+	
+	<!-- //meta og -->	
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<script src="divideHangulPhoneme.js"></script>
+	<script src="convertHeavyHangul.js"></script>
+	<script>
+	//<!--
+	function convert(str){
+		var r = convertHeavyHangul.convertTo(str);
+		var r2 = convertHeavyHangul.convertFrom(r);
+		var msgs = [],msg = "";
+		for(var i=0,m=str.length;i<m;i++){
+			char = str.charAt(i);
+			msg = "'"+char+"' => '"+r[i]+"' => '"+r2[i]+"'";
+
+			 msgs.push(msg);
+		}
+		document.formTest.textareaResult.value = msgs.join("\n")
+	}
+	//-->
+	</script>
+</head>
+<body>
+	<div class="container">
+		<h1>convertHeavyHangul</h1>
+		<h2>문자열을 무거운 한글로 바꾸기</h2>
+		<form name="formTest0" action="#" onsubmit="convert(this.textInput.value);return false;">
+			<ul class="list-group">
+				<li class="list-group-item active">문자열을 무거운 한글로 바꾸기</li>
+				<li class="list-group-item">
+					<div class="input-group">
+						<span class="input-group-addon">영문</span>
+						<input type="text" class="form-control"  onkeyup="this.form.textInput1.value=convertHeavyHangul.convertTo(this.value)" name="textInput0" placeholder="한글AB뷁?韓" value="한글AB뷁?韓">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" onclick="this.form.textInput0.onkeyup()">Go!</button>
+						</span>
+					</div><!-- /input-group -->
+				</li>
+				<li class="list-group-item">
+					<div class="input-group">
+						<span class="input-group-addon">한글</span>
+						<input type="text" class="form-control"    onkeyup="this.form.textInput2.value=convertHeavyHangul.convertFrom(this.value)"  name="textInput1" placeholder="" value="">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" onclick="this.form.textInput1.onkeyup()">Go!</button>
+						</span>
+					</div><!-- /input-group -->
+				</li>
+				<li class="list-group-item">
+					<div class="input-group">
+						<span class="input-group-addon">영문</span>
+						<input type="text" class="form-control"    onkeyup="convert(this.value);" name="textInput2" placeholder="" value="">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">Go!</button>
+						</span>
+					</div><!-- /input-group -->
+				</li>
+			</ul>
+		</form>
+		<form name="formTest" action="#" onsubmit="convert(this.textInput.value);return false;">
+			<ul class="list-group">
+				<li class="list-group-item active">한글 음소 나누기</li>
+				<li class="list-group-item">
+					<div class="input-group">
+						<span class="input-group-addon">한글</span>
+						<input type="text" class="form-control"    onkeyup="convert(this.value);" name="textInput" placeholder="한글AB뷁?韓" value="한글AB뷁?韓">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit">Go!</button>
+						</span>
+					</div><!-- /input-group -->
+				</li>
+				<li class="list-group-item">
+					<textarea name="textareaResult" class="form-control" rows="20"></textarea>
+				</li>
+			</ul>
+		</form>
+
+	</div>
+</body>
+</html>
