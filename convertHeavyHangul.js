@@ -4,6 +4,7 @@ var convertHeavyHangul = function(){
 			return this.toHeavyHangul(this.toPos(str));
 		},
 		"toPos":function(str){
+			str = encodeURIComponent(str);
 			var arr = [],hex=null;
 			for(var i=0,m=str.length;i<m;i++){
 				hex = str[i].charCodeAt(0).toString(16);
@@ -46,17 +47,16 @@ var convertHeavyHangul = function(){
 		},
 		"convertFrom":function(heavyHangul){
 			var bytes  = [];
+			
 			for(var i=0,m=heavyHangul.length;i<m;i++){
-				var num = parseInt(this.heavyHangulToHex(heavyHangul[i]),16)
-				// console.log(num);
-				if(num>127){
-					num = num*256+ parseInt(this.heavyHangulToHex(heavyHangul[i+1]),16)
-					i++;
-				}
+				var hex = this.heavyHangulToHex(heavyHangul[i])
+				var num = parseInt(hex,16)
+				var bin = num.toString(2);
 				bytes.push(num);
 			}
 			// console.log(bytes);
-			return String.fromCharCode.apply(String, bytes);
+			var str = String.fromCharCode.apply(String, bytes);
+			return decodeURIComponent(str);
 			
 		}
 		
