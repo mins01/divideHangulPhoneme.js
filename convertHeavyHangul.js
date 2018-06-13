@@ -1,13 +1,10 @@
 var convertHeavyHangul = function(){
 	return {
 		"convertTo":function(str){
+			str = this.base64_encode(str);
 			return this.toHeavyHangul(this.toPos(str));
 		},
 		"toPos":function(str){
-			// str = encodeURIComponent(str);
-			str = btoa(unescape(encodeURIComponent(str)));
-			// var r = decodeURIComponent(escape(atob(divideHangulPhoneme.charCodeFromPosArray(arr_toPos[i]))));
-
 			var arr = [],hex=null;
 			for(var i=0,m=str.length;i<m;i++){
 				hex = str[i].charCodeAt(0).toString(16);
@@ -58,8 +55,14 @@ var convertHeavyHangul = function(){
 			}
 			// console.log(bytes);
 			var str = String.fromCharCode.apply(String, bytes);
-			return decodeURIComponent(escape(atob(str)));;
+			return this.base64_decode(str);
 			
+		},
+		"base64_encode":function(str){
+			return btoa(unescape(encodeURIComponent(str)));
+		},
+		"base64_decode":function(str){
+			return decodeURIComponent(escape(atob(str)));;
 		}
 		
 	}
