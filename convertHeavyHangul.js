@@ -4,7 +4,10 @@ var convertHeavyHangul = function(){
 			return this.toHeavyHangul(this.toPos(str));
 		},
 		"toPos":function(str){
-			str = encodeURIComponent(str);
+			// str = encodeURIComponent(str);
+			str = btoa(unescape(encodeURIComponent(str)));
+			// var r = decodeURIComponent(escape(atob(divideHangulPhoneme.charCodeFromPosArray(arr_toPos[i]))));
+
 			var arr = [],hex=null;
 			for(var i=0,m=str.length;i<m;i++){
 				hex = str[i].charCodeAt(0).toString(16);
@@ -29,7 +32,6 @@ var convertHeavyHangul = function(){
 			var rarr = [];
 			for(var i=0,m=arr_toPos.length;i<m;i++){
 				var r = String.fromCharCode(divideHangulPhoneme.charCodeFromPosArray(arr_toPos[i]))
-				// console.log(arr_toPos[i],r);
 				rarr.push(r);
 			}
 			return rarr.join('');
@@ -56,7 +58,7 @@ var convertHeavyHangul = function(){
 			}
 			// console.log(bytes);
 			var str = String.fromCharCode.apply(String, bytes);
-			return decodeURIComponent(str);
+			return decodeURIComponent(escape(atob(str)));;
 			
 		}
 		
